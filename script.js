@@ -164,7 +164,7 @@
   var n = 9,   // distance to near plane
     f = 13,  // distance to far plane
     e = 2.5, // focal length ( 1 / tan(FOV / 2) )
-    eye = new Vector3(4, 4, -12),
+    eye = new Vector3(3, 3, -12),
     lookAt = new Vector3(0, 0, 0);
 
   var ratio,
@@ -222,9 +222,9 @@
     // hacky way to get all the colors
     // only works if -1 <= x, y, z <= 1 (death star radius is 1)
     if (color == null) {
-      var cr = Math.round(127 * v.x + 127),
-        cg = Math.round(127 * v.y + 127),
-        cb = Math.round(127 * v.z + 127);
+      var cr = Math.round(327 * v.x + 327),
+        cg = Math.round(327 * v.y + 327), //replacing 127+127+ , with 327+327 , the density increases
+        cb = Math.round(327 * v.z + 327);
       color = 'rgb(' + cr + ', ' + cg + ', ' + cb + ')';
     }
     v = pointToScreen(v);
@@ -232,31 +232,31 @@
     ctx.fillRect(v.x, v.y, v.z, v.z); // v.z is hacky 'pixel' size
   }
 
-  var t = 2;
+  var t = 22;
   setInterval(function () {
-    t += 0.01;
+    t += 0.09;
     var imgData = ctx.getImageData(0, 0, canvas.width, canvas.height);
     var length = imgData.data.length;
-    for (var i = 0; i < length; i += 10) {
+    for (var i = 0; i < length; i += 22) {
       if (imgData.data[i])
-        imgData.data[i] = Math.floor(0.105 * imgData.data[i]);
-      if (imgData.data[i + 1])
-        imgData.data[i + 1] = Math.floor(0.105 * imgData.data[i + 3]);
+        imgData.data[i] = Math.floor(2.222 * imgData.data[i]);
       if (imgData.data[i + 2])
-        imgData.data[i + 2] = Math.floor(0.105 * imgData.data[i + 4]);
+        imgData.data[i + 2] = Math.floor(0.222 * imgData.data[i + 9]);
+      if (imgData.data[i + 2])
+        imgData.data[i + 2] = Math.floor(0.105 * imgData.data[i + 9]);
     }
     ctx.putImageData(imgData, 0, 0);
 
     // renderPoint(new Vector3(Math.sin(t), Math.cos(t), 0), 'red');
     // this is where the magic happens
 
-    var cnt = 50;
+    var cnt = 105;
     for (var i = -cnt; i <= cnt; i++) {
       var hgt = i / (cnt + 1);
       var mag = Math.sqrt(1 - hgt * hgt);
       renderPoint(new Vector3(mag * Math.sin(t), hgt, mag * Math.cos(t)));
     }
-    t += .02;
-  }, 20);
+    t += .22;
+  }, 22);
 
 })(document.getElementById('blackboard'));
